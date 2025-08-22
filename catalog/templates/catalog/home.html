@@ -1,0 +1,49 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Home - E-commerce Catalog{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 40px;">
+    <h2>Welcome to Our Product Catalog</h2>
+    <p style="font-size: 18px; color: #666; margin-top: 10px;">Discover amazing products across different categories</p>
+</div>
+
+<div style="margin-bottom: 40px;">
+    <h3 style="margin-bottom: 20px;">📂 Browse Categories</h3>
+    <div class="category-list">
+        {% for category in categories %}
+        <div class="category-card">
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
+            <a href="/categories/{{ category.id }}/" class="btn">View Products</a>
+        </div>
+        {% empty %}
+        <p>No categories available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div>
+    <h3 style="margin-bottom: 20px;">✨ Featured Products</h3>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description|truncatewords:15 }}</p>
+            <div class="product-meta">
+                <span class="category-tag">{{ product.category.name }}</span>
+                <span class="brand-tag">{{ product.brand.name }}</span>
+            </div>
+            <div class="price">${{ product.price }}</div>
+            <a href="/products/{{ product.id }}/" class="btn">View Details</a>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/products/" class="btn">View All Products</a>
+    </div>
+</div>
+{% endblock %}

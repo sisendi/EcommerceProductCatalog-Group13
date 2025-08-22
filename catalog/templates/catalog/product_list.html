@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Products - E-commerce Catalog{% endblock %}
+
+{% block header %}All Products{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 30px;">
+    <h2>Our Product Collection</h2>
+    <p style="color: #666;">{{ products|length }} product{{ products|length|pluralize }} available</p>
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:20 }}</p>
+        <div class="product-meta">
+            <span class="category-tag">{{ product.category.name }}</span>
+            <span class="brand-tag">{{ product.brand.name }}</span>
+        </div>
+        <div class="price">${{ product.price }}</div>
+        <div style="margin-top: 15px;">
+            <small style="color: #888;">SKU: {{ product.sku }}</small>
+        </div>
+        <a href="/products/{{ product.id }}/" class="btn" style="margin-top: 15px;">View Details</a>
+    </div>
+    {% empty %}
+    <div style="text-align: center; padding: 50px;">
+        <h3>No products available</h3>
+        <p>Check back later for new products!</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

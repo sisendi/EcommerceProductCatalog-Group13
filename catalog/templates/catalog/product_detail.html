@@ -1,0 +1,70 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ product.name }} - E-commerce Catalog{% endblock %}
+
+{% block header %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+        <div>
+            <h1 style="color: #333; margin-bottom: 20px;">{{ product.name }}</h1>
+            <p style="font-size: 18px; line-height: 1.6; margin-bottom: 25px;">{{ product.description }}</p>
+            
+            <div class="product-meta">
+                <span class="category-tag">📂 {{ product.category.name }}</span>
+                <span class="brand-tag">🏷️ {{ product.brand.name }}</span>
+            </div>
+            
+            <div style="margin: 25px 0;">
+                <div class="price" style="font-size: 32px;">${{ product.price }}</div>
+                <p style="color: #888; margin-top: 10px;">SKU: {{ product.sku }}</p>
+             {% if product.is_active %}
+<p style="color: #27ae60; font-weight: bold;">✅ In Stock</p>
+{% else %}
+<p style="color: #e74c3c; font-weight: bold;">❌ Out of Stock</p>
+{% endif %}
+            </div>
+        </div>
+        
+        <div>
+            {% if images %}
+            <h4 style="margin-bottom: 15px;">📸 Product Images</h4>
+            <div style="display: grid; gap: 10px;">
+                {% for image in images %}
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                    <p><strong>Image {{ forloop.counter }}</strong></p>
+                    <p style="color: #666; font-size: 14px;">{{ image.alt_text|default:"No description" }}</p>
+                    <p style="font-size: 12px; color: #888;">{{ image.is_primary|yesno:'Primary Image,Additional Image' }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="/products/" class="btn">← Back to Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if reviews %}
+<div class="reviews">
+    <h3 style="margin-bottom: 20px;">⭐ Customer Reviews ({{ reviews|length }})</h3>
+    {% for review in reviews %}
+    <div class="review">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <strong>{{ review.reviewer_name }}</strong>
+            <span class="rating">{{ review.rating }}/5 ⭐</span>
+        </div>
+        <p>{{ review.comment }}</p>
+        <small style="color: #888;">{{ review.created_at|date:"F d, Y" }}</small>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; margin-top: 30px;">
+    <p>No reviews yet. Be the first to review this product!</p>
+</div>
+{% endif %}
+{% endblock %}

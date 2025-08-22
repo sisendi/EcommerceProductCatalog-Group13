@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ category.name }} - E-commerce Catalog{% endblock %}
+
+{% block header %}{{ category.name }} Products{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 30px;">
+    <h2>{{ category.name }}</h2>
+    <p style="color: #666; font-size: 18px;">{{ category.description }}</p>
+    <p style="color: #888; margin-top: 10px;">{{ products|length }} product{{ products|length|pluralize }} in this category</p>
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:20 }}</p>
+        <div class="product-meta">
+            <span class="brand-tag">{{ product.brand.name }}</span>
+        </div>
+        <div class="price">${{ product.price }}</div>
+        <div style="margin-top: 15px;">
+            <small style="color: #888;">SKU: {{ product.sku }}</small>
+        </div>
+        <a href="/products/{{ product.id }}/" class="btn" style="margin-top: 15px;">View Details</a>
+    </div>
+    {% empty %}
+    <div style="text-align: center; padding: 50px;">
+        <h3>No products in this category yet</h3>
+        <p>Check back later for new products!</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+    <a href="/categories/" class="btn">← Back to Categories</a>
+    <a href="/products/" class="btn" style="margin-left: 15px;">View All Products</a>
+</div>
+{% endblock %}
