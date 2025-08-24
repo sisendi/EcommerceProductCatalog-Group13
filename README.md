@@ -1,8 +1,9 @@
 # E-commerce Product Catalog API
 
 ## Group Member
-- **Student ID**: 147115
-- **Name**: Serena Isendi
+- 147115 Serena Isendi
+- 169915 Joy Warigi
+  
 
 ## Project Description
 Django REST API for managing an e-commerce product catalog with CRUD operations for products, categories, brands, images, and reviews.
